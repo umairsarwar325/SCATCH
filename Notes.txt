@@ -1,0 +1,6 @@
+DATABASE SETUP
+  -> Seperation of concerns
+    - added mongoose connection in a config/mongoose_connection.js
+    - created models/oweners_model.js for oweners
+    - created models/users_model.js for users
+    - created models/products_model.js for products
