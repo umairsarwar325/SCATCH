@@ -1,6 +1,24 @@
 DATABASE SETUP
   -> Seperation of concerns
-    - added mongoose connection in a config/mongoose_connection.js
+    - added mongoose connection in config/mongoose_connection.js
     - created models/oweners_model.js for oweners
     - created models/users_model.js for users
     - created models/products_model.js for products
+
+  -> Using Debug
+    - const dbgr = require("debug")("development:mongoose")
+    - dbgr("connected")
+    - set environment variable in terminal
+      method01: set DEBUG=development:*
+      method02: 
+        - setx DEBUG "development:*"
+        - npm install dotenv (in project)
+        - require('dotenv').config(); (in app.js)
+        to see DEBUG value: console.log(process.env.DEBUG);
+        optional
+        - add .env in project
+        - DEBUG=development:* (in .env)
+
+
+
+        
