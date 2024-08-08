@@ -5,19 +5,55 @@ DATABASE SETUP
     - created models/users_model.js for users
     - created models/products_model.js for products
 
+  -> Setting up environment variables
+    METHOD 01: Using cmd
+      - setx NODE_ENV "development"
+    METHOD 02: Using .env
+      - add .env in project
+      - DEBUG=development:* (in .env)
+    METHOD 03: config folder NODE_ENV
+      - setx NODE_ENV "development"
+      or
+      - NODE_ENV=development (in .env)
+      - make config folder
+      - make development.json
+      - add environment variables
+      eg:
+      - make config/development.json
+      - add MONGODB_URI
+
+  -> Using environment variables
+    METHOD 01:dotenv
+    dotenv: this package will provide access to .env vars easily
+      - npm install dotenv (in project)
+      - require('dotenv').config(); (in app.js)
+      - process.env.DEBUG (anywhere in project)
+    METHOD 02:config
+    config: this package will access environment variables from config folder according to value of NODE_ENV
+    - install and require [config] package
+    - config.get(MONGODB_URI)
+
   -> Using Debug
     - const dbgr = require("debug")("development:mongoose")
     - dbgr("connected")
-    - set environment variable in terminal
-      method01: set DEBUG=development:*
-      method02: 
+    - set environment variable
         - setx DEBUG "development:*"
-        - npm install dotenv (in project)
-        - require('dotenv').config(); (in app.js)
         to see DEBUG value: console.log(process.env.DEBUG);
-        optional
-        - add .env in project
-        - DEBUG=development:* (in .env)
+        
+  -> bcrypt
+    - to hash the password
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(password, salt, async function (err, hash) {});
+
+  -> jsonwebtoken
+    - we will set token for details that are required for user authentication in protected routes after   user is logged in
+    let token = jwt.sign({email, id:createdUser._id},"secret")
+
+  -> setting and reading cookie
+    - setting cookie on users browser
+    res.send("token",token)
+    - reading cookie from users browser
+    req.cookies("token")
 
 
 

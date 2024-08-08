@@ -24,4 +24,4 @@ const ownerSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("owner", userSchema);
+module.exports = mongoose.model("owner", ownerSchema);
