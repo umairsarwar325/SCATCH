@@ -47,14 +47,29 @@ DATABASE SETUP
 
   -> jsonwebtoken
     - we will set token for details that are required for user authentication in protected routes after   user is logged in
-    let token = jwt.sign({email, id:createdUser._id},"secret")
+    - set token
+      let token = jwt.sign({email, id:createdUser._id},"secret")
+    - decode token
+      let decodedToken = jwt.verify(req.cookies.token,"secret")
 
   -> setting and reading cookie
     - setting cookie on users browser
     res.send("token",token)
     - reading cookie from users browser
-    req.cookies("token")
+    req.cookies.token
 
-
-
-        
+  -> flash messages and req.Somthing
+    - we can set data in one router using these and can read data on any second router
+    - How to set
+    - flash messages
+      - install and setup "express-session"
+      - install and setup connect-flash package
+      - to set message
+        req.flash("messageName","messageData")
+      - to read message
+        req.flash("messageName")
+    - req.Somthing
+      - set
+        req.user = user;
+      - read
+        req.user;

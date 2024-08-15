@@ -3,6 +3,7 @@ const router = express.Router();
 const ownersModel = require("../models/oweners_model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const isLoggedIn = require("../middlewares/isLoggedIn")
 
 if (process.env.NODE_ENV) {
   router.post("/create", async (req, res) => {
@@ -21,7 +22,7 @@ if (process.env.NODE_ENV) {
   });
 }
 
-router.get("/", (req, res) => {
+router.get("/",isLoggedIn, (req, res) => {
   res.send("owners");
 });
 
