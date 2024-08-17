@@ -1,4 +1,4 @@
-DATABASE SETUP
+SCATCH (Project Notes)
   -> Seperation of concerns
     - added mongoose connection in config/mongoose_connection.js
     - created models/oweners_model.js for oweners
@@ -60,16 +60,42 @@ DATABASE SETUP
 
   -> flash messages and req.Somthing
     - we can set data in one router using these and can read data on any second router
-    - How to set
     - flash messages
-      - install and setup "express-session"
-      - install and setup connect-flash package
-      - to set message
-        req.flash("messageName","messageData")
-      - to read message
-        req.flash("messageName")
+      - flash message stays there till you don't send a new request
+      - How to set
+        - install and setup "express-session"
+        - install and setup connect-flash package
+        - to set message
+          req.flash("messageName","messageData")
+        - to read message
+          req.flash("messageName")
     - req.Somthing
       - set
         req.user = user;
       - read
         req.user;
+
+  -> MULTER: memory storage
+    - In multer.js
+      const multer = require("multer");
+      const storage = multer.memoryStorage();
+      const upload = multer({ storage: storage });
+      module.exports = upload;
+    - In form tag
+      add attribute: enctype="multipart/form-data"
+    - In API
+      add middleware: upload.single('fileName')
+      acccess file: req.file
+
+
+
+
+
+
+
+
+
+
+
+
+

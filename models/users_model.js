@@ -1,4 +1,4 @@
-const mongoose =  require("mongoose");
+const mongoose = require("mongoose");
 
 const userSchema = mongoose.Schema({
   fullName: {
@@ -22,10 +22,12 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  cart: {
-    type: Array,
-    default: [],
-  },
+  cart: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "product",
+    },
+  ],
   orders: {
     type: Array,
     default: [],

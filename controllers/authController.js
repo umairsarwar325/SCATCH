@@ -1,4 +1,5 @@
 const userModel = require("../models/users_model");
+const ownerModel = require("../models/oweners_model");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../utils/generateToken");
 
@@ -6,16 +7,20 @@ module.exports.registerUser = async (req, res) => {
   try {
     let { email, password, fullName } = req.body;
     let user = await userModel.findOne({ email: email });
-    if (user) {
-      return res.status(401).send("user already exists. please login");
+    let owner = await ownerModel.findOne({ email: email });
+    if (user || owner) {
+      req.flash("error", "this email is already registered. please login");
+      return res.redirect("/");
     }
     bcrypt.genSalt(10, function (err, salt) {
       if (err) {
-        res.send(err.message);
+        req.flash("error", err.message);
+        return res.redirect("/");
       }
       bcrypt.hash(password, salt, async function (err, hash) {
         if (err) {
-          res.send(err.message);
+          req.flash("error", err.message);
+          return res.redirect("/");
         }
         let createdUser = await userModel.create({
           fullName,
@@ -24,33 +29,48 @@ module.exports.registerUser = async (req, res) => {
         });
         let token = generateToken(createdUser);
         res.cookie("token", token);
-        res.send(token);
+        return res.redirect("/shop");
       });
     });
   } catch (err) {
-    res.send(err.message);
+    req.flash("error", err.message);
+    return res.redirect("/");
   }
 };
 
 module.exports.loginUser = async (req, res) => {
   try {
     let { email, password } = req.body;
-
     let user = await userModel.findOne({ email: email });
-    if (!user) {
-      return res.status(401).send("Incorrect email or password");
+    let owner = await ownerModel.findOne({ email: email });
+    if (!user && !owner) {
+      req.flash("error", "Incorrect email or password");
+      return res.redirect("/");
     }
-
-    bcrypt.compare(password, user.password, (err, result) => {
+    let retrievedUser = user ? user : owner;
+    bcrypt.compare(password, retrievedUser.password, (err, result) => {
       if (result) {
-        let token = generateToken(user);
+        let token = generateToken(retrievedUser);
         res.cookie("token", token);
-        res.send("loggedin");
+        res.redirect("/shop");
       } else {
-        return res.status(401).send("Incorrect email or password");
+        req.flash("error", "Incorrect email or password");
+        return res.redirect("/");
       }
     });
   } catch (err) {
-    res.send(err.message);
+    req.flash("error", err.message);
+    return res.redirect("/");
+  }
+};
+
+module.exports.logoutUser = async (req, res) => {
+  try {
+    res.cookie("token", "");
+    req.flash("error", "You are logged out");
+    return res.redirect("/");
+  } catch (err) {
+    req.flash("error", err.message);
+    return res.redirect("/");
   }
 };

@@ -1,9 +1,8 @@
 const jwt = require("jsonwebtoken");
-const userModel = require("../models/users_model");
 const ownerModel = require("../models/oweners_model");
 const keys = require("../config/keys");
 
-const isLoggedIn = async (req, res, next) => {
+const isAdmin = async (req, res, next) => {
   try {
     let tokenFromBrowser = req.cookies.token;
     if (!tokenFromBrowser) {
@@ -11,21 +10,15 @@ const isLoggedIn = async (req, res, next) => {
       return res.redirect("/");
     } else {
       let decodedToken = jwt.verify(req.cookies.token, keys.JWT_KEY);
-      let user = await userModel
-        .findOne({ email: decodedToken.email })
-        .select("-password");
       let owner = await ownerModel
         .findOne({ email: decodedToken.email })
         .select("-password");
-      if (user) {
-        req.user = user;
-        next();
-      } else if (owner) {
-        req.user = owner;
+      if (owner && owner.isAdmin) {
+        req.owner = owner;
         next();
       } else {
-        req.flash("error", "you need to login first");
-        return res.redirect("/");
+        req.flash("error", "You are not admin");
+        return res.redirect("/shop");
       }
     }
   } catch (error) {
@@ -33,4 +26,4 @@ const isLoggedIn = async (req, res, next) => {
   }
 };
 
-module.exports = isLoggedIn;
+module.exports = isAdmin;

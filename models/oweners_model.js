@@ -1,4 +1,4 @@
-const mongoose =  require("mongoose");
+const mongoose = require("mongoose");
 
 const ownerSchema = mongoose.Schema({
   fullName: {
@@ -21,6 +21,10 @@ const ownerSchema = mongoose.Schema({
   products: {
     type: Array,
     default: [],
+  },
+  isAdmin: {
+    type: Boolean,
+    default: true,
   },
 });
 

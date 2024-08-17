@@ -1,13 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const ownersModel = require("../models/oweners_model");
+const { shopController } = require("../controllers/shopController");
+const { Cart,addToCart } = require("../controllers/userCart");
 const isLoggedIn = require("../middlewares/isLoggedIn");
+const { logoutUser } = require("../controllers/authController");
 
 router.get("/", (req, res) => {
-  res.render("index", { error: [] });
+  let error = req.flash("error");
+  res.render("index", { error });
 });
-router.get("/shop", isLoggedIn, (req, res) => {
-  res.render("shop", { products: [] });
-});
+router.get("/shop", isLoggedIn, shopController);
+router.get("/cart", isLoggedIn, Cart);
+router.get("/add-to-cart/:productId", isLoggedIn, addToCart);
+router.get("/logout", isLoggedIn, logoutUser);
 
 module.exports = router;
