@@ -12,7 +12,7 @@
 - Contributing
 
 ## Introduction
-SCATCH is an online premium bag store built using Node.js, MongoDB, EJS, and Express. It offers a seamless shopping experience with features like user authentication, product management, and a user-friendly cart system. I have also added Project Notes "Notes.txt" so you can easily get the idea how project was created step by step
+SCATCH is an online premium bag store built using Node.js, MongoDB, EJS, and Express. It offers a seamless shopping experience with features like user authentication, product management, and a user-friendly cart system. I have also added Project Notes "Notes.txt" so you can easily get the idea how project was created step by step.
 
 ## Features
 - User registration and login with JWT authentication.
