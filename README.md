@@ -34,3 +34,52 @@ SCATCH is an online premium bag store built using Node.js, MongoDB, EJS, and Exp
 ### Clone the repository:
 ```bash
 git clone https://github.com/yourusername/SCATCH.git
+```
+## Navigate to the project directory:
+```bash
+cd SCATCH
+```
+## Install dependencies:
+```bash
+npm install
+```
+## Set up environment variables:
+```bash
+Create a .env file in the root directory.
+```
+## Add the following variables:
+```bash
+MONGODB_URI=your_mongodb_uri
+JWT_KEY=your_jwt_secret
+```
+
+## Usage
+## Start the application:
+```bash
+npm start
+```
+or
+```bash
+nodemon
+```
+Open your browser and navigate to 
+```bash
+http://localhost:3000
+```
+
+## Admin Panel
+- Only accessible by admin users.
+- Admins can create, update, and delete products.
+- Admins cannot add items to the cart or view the cart.
+
+## Authentication & Authorization
+- User authentication is handled using JSON Web Tokens (JWT).
+- Passwords are hashed using bcrypt for security.
+- Admin routes are protected and can only be accessed by users with admin privileges.
+
+## Flash Messages
+- Flash messages are used to display success and error notifications to users.
+- Example: If an admin tries to access the cart, a flash message will notify them that they cannot have a cart.
+
+## Contributing
+- Contributions are welcome! Please fork the repository and submit a pull request.
