@@ -44,9 +44,7 @@ cd SCATCH
 npm install
 ```
 ## Set up environment variables:
-```bash
 Create a .env file in the root directory.
-```
 ## Add the following variables:
 ```bash
 MONGODB_URI=your_mongodb_uri
